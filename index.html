@@ -158,11 +158,15 @@
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 60% 40%, rgba(201,168,76,.18) 0%, transparent 60%),
-        radial-gradient(ellipse at 20% 70%, rgba(120,80,20,.25) 0%, transparent 55%),
-        linear-gradient(160deg, #0e0a04 0%, #2a1e0a 50%, #1a1208 100%);
+      background-image: url('https://www.mesondelconde.com/wp-content/uploads/2025/09/1-scaled.jpg');
+      background-size: cover; background-position: center;
       transform-origin: center; animation: hero-drift 18s ease-in-out infinite alternate;
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 60% 40%, rgba(201,168,76,.1) 0%, transparent 60%),
+        linear-gradient(160deg, rgba(14,10,4,.85) 0%, rgba(26,18,8,.7) 50%, rgba(14,10,4,.8) 100%);
     }
     @keyframes hero-drift {
       from { transform: scale(1) translateY(0); }
@@ -298,15 +302,10 @@
     }
     .about-frame {
       position: absolute; inset: 0;
-      background: linear-gradient(135deg, #2e2616 0%, #1a1208 100%);
       border-radius: 4px; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
     }
-    .about-frame-inner {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 7rem; color: rgba(201,168,76,.12);
-      user-select: none; line-height: 1;
-      text-align: center;
+    .about-frame img {
+      width: 100%; height: 100%; object-fit: cover;
     }
     .about-badge {
       position: absolute; bottom: -24px; right: -24px;
@@ -651,7 +650,10 @@
   <!-- ═══ NAV ═══ -->
   <nav id="nav">
     <div class="container nav-inner">
-      <a href="#hero" class="nav-logo">Mesón <span>del Conde</span></a>
+      <a href="#hero" class="nav-logo">
+        <img src="https://www.mesondelconde.com/wp-content/uploads/2025/09/Logo-Meson-del-Conde-60.jpg" alt="Mesón del Conde" style="height:40px;width:auto;border-radius:2px;vertical-align:middle;margin-right:10px;" />
+        Mesón <span>del Conde</span>
+      </a>
 
       <ul class="nav-links">
         <li><a href="#about"   data-lang="ca">Nosaltres</a><a href="#about"   data-lang="es" style="display:none">Nosotros</a><a href="#about"   data-lang="en" style="display:none">About</a><a href="#about"   data-lang="fr" style="display:none">À propos</a><a href="#about"   data-lang="de" style="display:none">Über uns</a><a href="#about"   data-lang="nl" style="display:none">Over ons</a></li>
@@ -791,7 +793,7 @@
       <div class="about-grid">
         <div class="about-visual reveal-l">
           <div class="about-frame">
-            <div class="about-frame-inner">🏛️</div>
+            <img src="https://www.mesondelconde.com/wp-content/uploads/2025/09/2.png" alt="Mesón del Conde interior" loading="lazy" />
           </div>
           <div class="about-deco"></div>
           <div class="about-badge">
@@ -1308,6 +1310,60 @@
       </p>
       <p class="testimonial-source">Programa 2×12 · TV3 · 2018</p>
     </div>
+  </section>
+
+  <!-- ═══ GALLERY ═══ -->
+  <section id="gallery" style="padding:100px 0;background:var(--cream);">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:56px;">
+        <p class="section-label">
+          <span data-lang="ca">El nostre espai</span>
+          <span data-lang="es" style="display:none">Nuestro espacio</span>
+          <span data-lang="en" style="display:none">Our space</span>
+          <span data-lang="fr" style="display:none">Notre espace</span>
+          <span data-lang="de" style="display:none">Unser Raum</span>
+          <span data-lang="nl" style="display:none">Onze ruimte</span>
+        </p>
+        <h2 class="section-title">
+          <span data-lang="ca">Galeria de fotos</span>
+          <span data-lang="es" style="display:none">Galería de fotos</span>
+          <span data-lang="en" style="display:none">Photo gallery</span>
+          <span data-lang="fr" style="display:none">Galerie photos</span>
+          <span data-lang="de" style="display:none">Fotogalerie</span>
+          <span data-lang="nl" style="display:none">Fotogalerij</span>
+        </h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto;gap:12px;">
+        <div class="reveal gallery-item" style="grid-column:1/3;grid-row:1/2;aspect-ratio:16/9;overflow:hidden;border-radius:4px;">
+          <img src="https://www.mesondelconde.com/wp-content/uploads/2025/09/3.png" alt="Mesón del Conde" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);" />
+        </div>
+        <div class="reveal gallery-item" style="grid-column:3/4;grid-row:1/3;aspect-ratio:3/4;overflow:hidden;border-radius:4px;transition-delay:.1s;">
+          <img src="https://www.mesondelconde.com/wp-content/uploads/2025/09/4.png" alt="Mesón del Conde" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);" />
+        </div>
+        <div class="reveal gallery-item" style="grid-column:1/2;aspect-ratio:4/3;overflow:hidden;border-radius:4px;transition-delay:.15s;">
+          <img src="https://www.mesondelconde.com/wp-content/uploads/2025/09/5.png" alt="Mesón del Conde" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);" />
+        </div>
+        <div class="reveal gallery-item" style="grid-column:2/3;aspect-ratio:4/3;overflow:hidden;border-radius:4px;transition-delay:.2s;">
+          <img src="https://www.mesondelconde.com/wp-content/uploads/2025/09/6.png" alt="Mesón del Conde" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);" />
+        </div>
+        <div class="reveal gallery-item" style="grid-column:1/2;aspect-ratio:4/3;overflow:hidden;border-radius:4px;transition-delay:.25s;">
+          <img src="https://www.mesondelconde.com/wp-content/uploads/2025/09/7.jpeg" alt="Mesón del Conde" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);" />
+        </div>
+        <div class="reveal gallery-item" style="grid-column:2/3;aspect-ratio:4/3;overflow:hidden;border-radius:4px;transition-delay:.3s;">
+          <img src="https://www.mesondelconde.com/wp-content/uploads/2025/09/8.png" alt="Mesón del Conde" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);" />
+        </div>
+        <div class="reveal gallery-item" style="grid-column:3/4;aspect-ratio:4/3;overflow:hidden;border-radius:4px;transition-delay:.35s;">
+          <img src="https://www.mesondelconde.com/wp-content/uploads/2025/09/9.png" alt="Mesón del Conde" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);" />
+        </div>
+      </div>
+    </div>
+    <style>
+      .gallery-item:hover img { transform: scale(1.06); }
+      @media(max-width:700px){
+        #gallery > .container > div:last-child { grid-template-columns:1fr 1fr!important; }
+        #gallery .gallery-item { grid-column: auto!important; grid-row: auto!important; aspect-ratio:1!important; }
+      }
+    </style>
   </section>
 
   <!-- ═══ VISIT ═══ -->
