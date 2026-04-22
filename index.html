@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mesón del Conde – Sant Martí d'Empúries</title>
+  <meta name="description" content="Restaurant tradicional de cuina empordanesa des de 1965. Plaça Major, 4 – Sant Martí d'Empúries, L'Escala, Girona." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Tokens ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold:   #c9a84c;
+      --gold-lt:#e8d08a;
+      --dark:   #1a1208;
+      --stone:  #2e2616;
+      --cream:  #f8f3ea;
+      --warm:   #f2e8d5;
+      --text:   #3d3220;
+      --muted:  #7a6a52;
+      --nav-h:  72px;
+      --ease:   cubic-bezier(.4,0,.2,1);
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Utility ── */
+    .serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .gold  { color: var(--gold); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      font-size: .7rem; font-weight: 600; letter-spacing: .25em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300; line-height: 1.15;
+      color: var(--dark);
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-l { opacity: 0; transform: translateX(-32px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    .reveal-l.visible { opacity: 1; transform: none; }
+    .reveal-r { opacity: 0; transform: translateX(32px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    .reveal-r.visible { opacity: 1; transform: none; }
+
+    /* ══════════════════════════════
+       NAV
+    ══════════════════════════════ */
+    #nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 1000;
+      height: var(--nav-h);
+      display: flex; align-items: center;
+      transition: background .4s var(--ease), box-shadow .4s var(--ease);
+    }
+    #nav.scrolled {
+      background: rgba(26,18,8,.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 24px rgba(0,0,0,.4);
+    }
+    .nav-inner {
+      width: 100%; display: flex; align-items: center;
+      justify-content: space-between; gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 400; letter-spacing: .05em;
+      color: #fff; white-space: nowrap;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex; align-items: center; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      font-size: .72rem; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: rgba(255,255,255,.8);
+      transition: color .3s;
+      position: relative; padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 1px; background: var(--gold);
+      transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease);
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      background: var(--gold); color: var(--dark) !important;
+      padding: 9px 20px; border-radius: 2px;
+      font-weight: 600 !important;
+      transition: background .3s, transform .2s !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--gold-lt) !important; transform: translateY(-1px); }
+
+    /* Lang switcher */
+    .lang-switcher {
+      display: flex; gap: 6px; align-items: center;
+    }
+    .lang-btn {
+      font-size: .62rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: rgba(255,255,255,.5);
+      background: none; border: none; cursor: pointer; padding: 3px 5px;
+      border-radius: 2px; transition: color .25s, background .25s;
+    }
+    .lang-btn.active, .lang-btn:hover {
+      color: var(--gold); background: rgba(201,168,76,.1);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: #fff; border-radius: 2px;
+      transition: transform .35s var(--ease), opacity .35s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none; position: fixed; inset: var(--nav-h) 0 0 0; z-index: 999;
+      background: rgba(26,18,8,.97); flex-direction: column;
+      align-items: center; justify-content: center; gap: 32px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; color: #fff; font-weight: 300;
+      transition: color .3s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    #hero {
+      position: relative; height: 100dvh; min-height: 620px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden;
+      background: var(--dark);
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 60% 40%, rgba(201,168,76,.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 70%, rgba(120,80,20,.25) 0%, transparent 55%),
+        linear-gradient(160deg, #0e0a04 0%, #2a1e0a 50%, #1a1208 100%);
+      transform-origin: center; animation: hero-drift 18s ease-in-out infinite alternate;
+    }
+    @keyframes hero-drift {
+      from { transform: scale(1) translateY(0); }
+      to   { transform: scale(1.04) translateY(-12px); }
+    }
+    /* Decorative grain overlay */
+    .hero-grain {
+      position: absolute; inset: 0; opacity: .06;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    /* Decorative lines */
+    .hero-lines {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    }
+    .hero-lines::before, .hero-lines::after {
+      content: ''; position: absolute;
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 50%;
+    }
+    .hero-lines::before {
+      width: 65vmin; height: 65vmin;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+    }
+    .hero-lines::after {
+      width: 85vmin; height: 85vmin;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 0 24px;
+      animation: hero-in 1.2s var(--ease) both;
+    }
+    @keyframes hero-in {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .hero-eyebrow {
+      font-size: .68rem; font-weight: 600; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 300; line-height: 1;
+      color: #fff; margin-bottom: 8px;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 3vw, 1.6rem);
+      font-weight: 300; color: rgba(255,255,255,.65);
+      letter-spacing: .08em; margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold); color: var(--dark);
+      padding: 14px 32px; font-size: .78rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      border-radius: 2px; border: none; cursor: pointer;
+      transition: background .3s, transform .2s, box-shadow .3s;
+    }
+    .btn-primary:hover {
+      background: var(--gold-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201,168,76,.35);
+    }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: #fff;
+      padding: 14px 32px; font-size: .78rem; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      border-radius: 2px; border: 1px solid rgba(255,255,255,.4);
+      cursor: pointer;
+      transition: border-color .3s, background .3s, transform .2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--gold); background: rgba(201,168,76,.08);
+      transform: translateY(-2px);
+    }
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+      font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      animation: fade-pulse 2s ease-in-out infinite;
+    }
+    .scroll-arrow {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+    }
+    @keyframes fade-pulse {
+      0%,100% { opacity: .4; } 50% { opacity: 1; }
+    }
+
+    /* ══════════════════════════════
+       BAND – stats
+    ══════════════════════════════ */
+    #stats {
+      background: var(--stone);
+      padding: 48px 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 32px; text-align: center;
+    }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 300; color: var(--gold); line-height: 1;
+    }
+    .stat-label {
+      font-size: .68rem; font-weight: 500; letter-spacing: .15em;
+      text-transform: uppercase; color: rgba(255,255,255,.55);
+      margin-top: 6px;
+    }
+
+    /* ══════════════════════════════
+       ABOUT
+    ══════════════════════════════ */
+    #about { padding: 120px 0; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .about-visual {
+      position: relative; aspect-ratio: 4/5;
+    }
+    .about-frame {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #2e2616 0%, #1a1208 100%);
+      border-radius: 4px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-frame-inner {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 7rem; color: rgba(201,168,76,.12);
+      user-select: none; line-height: 1;
+      text-align: center;
+    }
+    .about-badge {
+      position: absolute; bottom: -24px; right: -24px;
+      width: 120px; height: 120px;
+      background: var(--gold);
+      border-radius: 50%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px rgba(201,168,76,.4);
+    }
+    .about-badge-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 400; color: var(--dark); line-height: 1;
+    }
+    .about-badge-text {
+      font-size: .5rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--dark); margin-top: 2px;
+    }
+    .about-deco {
+      position: absolute; top: -24px; left: -24px;
+      width: 120px; height: 120px;
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: 4px; pointer-events: none;
+    }
+    .about-text { }
+    .about-text p {
+      font-size: .95rem; line-height: 1.85;
+      color: var(--muted); margin-bottom: 20px;
+    }
+    .about-pills {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px;
+    }
+    .pill {
+      font-size: .68rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--gold);
+      border: 1px solid rgba(201,168,76,.4);
+      padding: 7px 16px; border-radius: 100px;
+      transition: background .3s, color .3s;
+    }
+    .pill:hover { background: var(--gold); color: var(--dark); }
+
+    /* ══════════════════════════════
+       MENU
+    ══════════════════════════════ */
+    #menu {
+      background: var(--warm); padding: 120px 0;
+    }
+    .menu-header { text-align: center; margin-bottom: 56px; }
+    /* Tabs */
+    .menu-tabs {
+      display: flex; justify-content: center; gap: 8px;
+      flex-wrap: wrap; margin-bottom: 48px;
+    }
+    .tab-btn {
+      font-size: .7rem; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--muted);
+      background: none; border: 1px solid rgba(61,50,32,.2);
+      padding: 10px 24px; border-radius: 100px; cursor: pointer;
+      transition: all .3s var(--ease);
+    }
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--gold); color: var(--dark);
+      border-color: var(--gold);
+    }
+    /* Panels */
+    .menu-panel { display: none; }
+    .menu-panel.active { display: block; }
+    .menu-panel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+    .menu-card {
+      background: var(--cream);
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 4px; padding: 24px 28px;
+      transition: box-shadow .3s, transform .3s;
+      cursor: default;
+    }
+    .menu-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,.08);
+      transform: translateY(-3px);
+    }
+    .menu-card-cat {
+      font-size: .62rem; font-weight: 600; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 16px;
+    }
+    .menu-item {
+      display: flex; justify-content: space-between;
+      align-items: baseline; gap: 12px;
+      padding: 8px 0; border-bottom: 1px solid rgba(61,50,32,.07);
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-weight: 400; color: var(--dark);
+    }
+    .menu-item-price {
+      font-size: .82rem; font-weight: 600; color: var(--gold);
+      white-space: nowrap;
+    }
+    /* Group menu */
+    .group-menu-card {
+      background: var(--dark); color: #fff;
+      border-radius: 6px; padding: 48px;
+      max-width: 740px; margin: 0 auto;
+      position: relative; overflow: hidden;
+    }
+    .group-menu-card::before {
+      content: ''; position: absolute;
+      top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(201,168,76,.2), transparent 70%);
+      pointer-events: none;
+    }
+    .group-menu-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem; font-weight: 300; color: var(--gold);
+    }
+    .group-menu-price sup { font-size: 1.5rem; vertical-align: super; }
+    .group-menu-sub {
+      font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
+      color: rgba(255,255,255,.5); margin-top: 4px; margin-bottom: 32px;
+    }
+    .group-menu-section { margin-bottom: 24px; }
+    .group-menu-section-title {
+      font-size: .62rem; font-weight: 600; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+    }
+    .group-menu-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; color: rgba(255,255,255,.8);
+      padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .group-menu-note {
+      font-size: .72rem; color: rgba(255,255,255,.4);
+      margin-top: 24px; font-style: italic;
+    }
+
+    /* ══════════════════════════════
+       EXPERIENCE
+    ══════════════════════════════ */
+    #experience { padding: 120px 0; }
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px; margin-top: 64px;
+    }
+    .exp-card {
+      padding: 40px 32px;
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 4px;
+      background: var(--cream);
+      position: relative; overflow: hidden;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .exp-card::before {
+      content: ''; position: absolute;
+      inset: 0; background: linear-gradient(135deg, rgba(201,168,76,.04), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .exp-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.1); transform: translateY(-4px); }
+    .exp-card:hover::before { opacity: 1; }
+    .exp-icon {
+      font-size: 2rem; margin-bottom: 20px; line-height: 1;
+    }
+    .exp-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 400; color: var(--dark);
+      margin-bottom: 12px;
+    }
+    .exp-desc {
+      font-size: .85rem; line-height: 1.75;
+      color: var(--muted);
+    }
+
+    /* ══════════════════════════════
+       TESTIMONIAL STRIP
+    ══════════════════════════════ */
+    #testimonial {
+      background: var(--stone); padding: 80px 0;
+      text-align: center; overflow: hidden;
+    }
+    .testimonial-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      font-weight: 300; font-style: italic;
+      color: rgba(255,255,255,.9); max-width: 740px; margin: 0 auto 24px;
+      line-height: 1.45;
+    }
+    .testimonial-source {
+      font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .testimonial-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem; color: rgba(201,168,76,.2);
+      line-height: .6; margin-bottom: 24px;
+    }
+
+    /* ══════════════════════════════
+       VISIT / CONTACT
+    ══════════════════════════════ */
+    #visit { padding: 120px 0; background: var(--warm); }
+    .visit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: start;
+    }
+    .contact-block { margin-bottom: 40px; }
+    .contact-block-title {
+      font-size: .65rem; font-weight: 600; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+    }
+    .contact-block-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; line-height: 1.5; color: var(--dark);
+    }
+    .contact-block-value a {
+      transition: color .3s;
+    }
+    .contact-block-value a:hover { color: var(--gold); }
+    .hours-grid {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 4px 16px;
+    }
+    .hours-day { font-size: .85rem; color: var(--muted); }
+    .hours-time { font-size: .85rem; color: var(--dark); font-weight: 500; }
+    .map-frame {
+      border-radius: 4px; overflow: hidden;
+      border: 1px solid rgba(201,168,76,.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,.1);
+      aspect-ratio: 4/3;
+    }
+    .map-frame iframe { width: 100%; height: 100%; border: none; }
+    .social-row { display: flex; gap: 16px; margin-top: 32px; }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .7rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--dark);
+      background: var(--cream);
+      border: 1px solid rgba(61,50,32,.15);
+      padding: 10px 18px; border-radius: 100px;
+      transition: all .3s;
+    }
+    .social-btn:hover {
+      background: var(--gold); border-color: var(--gold); color: var(--dark);
+    }
+
+    /* ══════════════════════════════
+       RESERVATION CTA
+    ══════════════════════════════ */
+    #reservation {
+      background: var(--dark); padding: 100px 0;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #reservation::before {
+      content: ''; position: absolute;
+      top: -80px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,.12), transparent 70%);
+      pointer-events: none;
+    }
+    .reservation-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300; color: #fff; margin-bottom: 16px;
+    }
+    .reservation-sub {
+      font-size: .88rem; color: rgba(255,255,255,.5);
+      margin-bottom: 48px; max-width: 480px; margin-left: auto; margin-right: auto;
+      line-height: 1.7;
+    }
+    .reservation-phones {
+      display: flex; justify-content: center; gap: 32px;
+      flex-wrap: wrap; margin-top: 32px;
+    }
+    .phone-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: rgba(255,255,255,.7);
+      display: flex; align-items: center; gap: 8px;
+      transition: color .3s;
+    }
+    .phone-link:hover { color: var(--gold); }
+    .phone-icon { font-size: 1rem; }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    footer {
+      background: #0e0a04; padding: 48px 0 32px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; color: rgba(255,255,255,.7);
+      margin-bottom: 8px;
+    }
+    .footer-tagline {
+      font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); margin-bottom: 32px;
+    }
+    .footer-links {
+      display: flex; justify-content: center; gap: 24px;
+      flex-wrap: wrap; list-style: none; margin-bottom: 32px;
+    }
+    .footer-links a {
+      font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,.35); transition: color .3s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-divider {
+      width: 48px; height: 1px; background: rgba(201,168,76,.3);
+      margin: 24px auto;
+    }
+    .footer-copy {
+      font-size: .68rem; color: rgba(255,255,255,.2);
+    }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-visual { max-width: 400px; margin: 0 auto; }
+      .visit-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 600px) {
+      :root { --nav-h: 60px; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .group-menu-card { padding: 32px 24px; }
+      .menu-panel-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Language strings ── */
+    [data-lang]:not([data-lang="ca"]) { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav id="nav">
+    <div class="container nav-inner">
+      <a href="#hero" class="nav-logo">Mesón <span>del Conde</span></a>
+
+      <ul class="nav-links">
+        <li><a href="#about"   data-lang="ca">Nosaltres</a><a href="#about"   data-lang="es" style="display:none">Nosotros</a><a href="#about"   data-lang="en" style="display:none">About</a><a href="#about"   data-lang="fr" style="display:none">À propos</a><a href="#about"   data-lang="de" style="display:none">Über uns</a><a href="#about"   data-lang="nl" style="display:none">Over ons</a></li>
+        <li><a href="#menu"    data-lang="ca">Carta</a><a href="#menu"    data-lang="es" style="display:none">Carta</a><a href="#menu"    data-lang="en" style="display:none">Menu</a><a href="#menu"    data-lang="fr" style="display:none">Menu</a><a href="#menu"    data-lang="de" style="display:none">Karte</a><a href="#menu"    data-lang="nl" style="display:none">Menu</a></li>
+        <li><a href="#visit"   data-lang="ca">Visita'ns</a><a href="#visit"   data-lang="es" style="display:none">Visítanos</a><a href="#visit"   data-lang="en" style="display:none">Visit Us</a><a href="#visit"   data-lang="fr" style="display:none">Nous trouver</a><a href="#visit"   data-lang="de" style="display:none">Besuchen</a><a href="#visit"   data-lang="nl" style="display:none">Bezoek ons</a></li>
+        <li><a href="https://mesondelconde.myrestoo.net" target="_blank" class="nav-cta" data-lang="ca">Reservar</a><a href="https://mesondelconde.myrestoo.net" target="_blank" class="nav-cta" data-lang="es" style="display:none">Reservar</a><a href="https://mesondelconde.myrestoo.net" target="_blank" class="nav-cta" data-lang="en" style="display:none">Reserve</a><a href="https://mesondelconde.myrestoo.net" target="_blank" class="nav-cta" data-lang="fr" style="display:none">Réserver</a><a href="https://mesondelconde.myrestoo.net" target="_blank" class="nav-cta" data-lang="de" style="display:none">Reservieren</a><a href="https://mesondelconde.myrestoo.net" target="_blank" class="nav-cta" data-lang="nl" style="display:none">Reserveren</a></li>
+      </ul>
+
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-set-lang="ca">CA</button>
+          <button class="lang-btn" data-set-lang="es">ES</button>
+          <button class="lang-btn" data-set-lang="en">EN</button>
+          <button class="lang-btn" data-set-lang="fr">FR</button>
+          <button class="lang-btn" data-set-lang="de">DE</button>
+          <button class="lang-btn" data-set-lang="nl">NL</button>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#about" class="mobile-link">Nosaltres / About</a>
+    <a href="#menu"  class="mobile-link">Carta / Menu</a>
+    <a href="#visit" class="mobile-link">Visita'ns / Visit</a>
+    <a href="https://mesondelconde.myrestoo.net" target="_blank" style="color:var(--gold);">Reservar / Reserve</a>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grain"></div>
+    <div class="hero-lines"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">
+        <span data-lang="ca">Sant Martí d'Empúries · Des de 1965</span>
+        <span data-lang="es" style="display:none">Sant Martí d'Empúries · Desde 1965</span>
+        <span data-lang="en" style="display:none">Sant Martí d'Empúries · Since 1965</span>
+        <span data-lang="fr" style="display:none">Sant Martí d'Empúries · Depuis 1965</span>
+        <span data-lang="de" style="display:none">Sant Martí d'Empúries · Seit 1965</span>
+        <span data-lang="nl" style="display:none">Sant Martí d'Empúries · Sinds 1965</span>
+      </p>
+      <h1 class="hero-title">Mesón <em>del Conde</em></h1>
+      <p class="hero-subtitle">
+        <span data-lang="ca">Cuina empordanesa de mercat</span>
+        <span data-lang="es" style="display:none">Cocina ampurdanesa de mercado</span>
+        <span data-lang="en" style="display:none">Traditional Empordà market cuisine</span>
+        <span data-lang="fr" style="display:none">Cuisine traditionnelle de l'Empordà</span>
+        <span data-lang="de" style="display:none">Traditionelle Empordà-Küche</span>
+        <span data-lang="nl" style="display:none">Traditionele Empordà keuken</span>
+      </p>
+      <div class="hero-btns">
+        <a href="https://mesondelconde.myrestoo.net" target="_blank" class="btn-primary">
+          <span data-lang="ca">Fer una reserva</span>
+          <span data-lang="es" style="display:none">Hacer una reserva</span>
+          <span data-lang="en" style="display:none">Make a reservation</span>
+          <span data-lang="fr" style="display:none">Faire une réservation</span>
+          <span data-lang="de" style="display:none">Tisch reservieren</span>
+          <span data-lang="nl" style="display:none">Een reservering maken</span>
+        </a>
+        <a href="#menu" class="btn-outline">
+          <span data-lang="ca">Veure la carta</span>
+          <span data-lang="es" style="display:none">Ver la carta</span>
+          <span data-lang="en" style="display:none">View the menu</span>
+          <span data-lang="fr" style="display:none">Voir le menu</span>
+          <span data-lang="de" style="display:none">Speisekarte ansehen</span>
+          <span data-lang="nl" style="display:none">Bekijk het menu</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ═══ STATS ═══ -->
+  <section id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="reveal">
+          <div class="stat-num" data-count="1965">1965</div>
+          <div class="stat-label">
+            <span data-lang="ca">Any de fundació</span>
+            <span data-lang="es" style="display:none">Año de fundación</span>
+            <span data-lang="en" style="display:none">Founded</span>
+            <span data-lang="fr" style="display:none">Fondé en</span>
+            <span data-lang="de" style="display:none">Gegründet</span>
+            <span data-lang="nl" style="display:none">Opgericht</span>
+          </div>
+        </div>
+        <div class="reveal" style="transition-delay:.1s">
+          <div class="stat-num">1878</div>
+          <div class="stat-label">
+            <span data-lang="ca">Edifici històric</span>
+            <span data-lang="es" style="display:none">Edificio histórico</span>
+            <span data-lang="en" style="display:none">Historic building</span>
+            <span data-lang="fr" style="display:none">Bâtiment historique</span>
+            <span data-lang="de" style="display:none">Historisches Gebäude</span>
+            <span data-lang="nl" style="display:none">Historisch gebouw</span>
+          </div>
+        </div>
+        <div class="reveal" style="transition-delay:.2s">
+          <div class="stat-num">6</div>
+          <div class="stat-label">
+            <span data-lang="ca">Idiomes</span>
+            <span data-lang="es" style="display:none">Idiomas</span>
+            <span data-lang="en" style="display:none">Languages</span>
+            <span data-lang="fr" style="display:none">Langues</span>
+            <span data-lang="de" style="display:none">Sprachen</span>
+            <span data-lang="nl" style="display:none">Talen</span>
+          </div>
+        </div>
+        <div class="reveal" style="transition-delay:.3s">
+          <div class="stat-num">365</div>
+          <div class="stat-label">
+            <span data-lang="ca">Dies obert</span>
+            <span data-lang="es" style="display:none">Días abierto</span>
+            <span data-lang="en" style="display:none">Days open</span>
+            <span data-lang="fr" style="display:none">Jours ouverts</span>
+            <span data-lang="de" style="display:none">Tage geöffnet</span>
+            <span data-lang="nl" style="display:none">Dagen open</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual reveal-l">
+          <div class="about-frame">
+            <div class="about-frame-inner">🏛️</div>
+          </div>
+          <div class="about-deco"></div>
+          <div class="about-badge">
+            <div class="about-badge-num">60</div>
+            <div class="about-badge-text">
+              <span data-lang="ca">Anys</span>
+              <span data-lang="es" style="display:none">Años</span>
+              <span data-lang="en" style="display:none">Years</span>
+              <span data-lang="fr" style="display:none">Ans</span>
+              <span data-lang="de" style="display:none">Jahre</span>
+              <span data-lang="nl" style="display:none">Jaar</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-text reveal-r">
+          <p class="section-label">
+            <span data-lang="ca">La nostra història</span>
+            <span data-lang="es" style="display:none">Nuestra historia</span>
+            <span data-lang="en" style="display:none">Our story</span>
+            <span data-lang="fr" style="display:none">Notre histoire</span>
+            <span data-lang="de" style="display:none">Unsere Geschichte</span>
+            <span data-lang="nl" style="display:none">Ons verhaal</span>
+          </p>
+          <h2 class="section-title" style="margin-bottom:32px;">
+            <span data-lang="ca">Tradició i sabor<br>a la Plaça Major</span>
+            <span data-lang="es" style="display:none">Tradición y sabor<br>en la Plaza Mayor</span>
+            <span data-lang="en" style="display:none">Tradition and flavour<br>in the main square</span>
+            <span data-lang="fr" style="display:none">Tradition et saveur<br>sur la place principale</span>
+            <span data-lang="de" style="display:none">Tradition und Genuss<br>am Hauptplatz</span>
+            <span data-lang="nl" style="display:none">Traditie en smaak<br>op het hoofdplein</span>
+          </h2>
+          <p>
+            <span data-lang="ca">El Mesón del Conde és un restaurant de cuina empordanesa establert el 1965, ubicat en un edifici construït el 1878 a la Plaça Major de Sant Martí d'Empúries. La seva arquitectura d'època s'ha combinat amb un interior modernitzat, ideal per a celebracions i reunions.</span>
+            <span data-lang="es" style="display:none">El Mesón del Conde es un restaurante de cocina ampurdanesa establecido en 1965, ubicado en un edificio construido en 1878 en la Plaça Major de Sant Martí d'Empúries. Su arquitectura de época se ha combinado con un interior modernizado, ideal para celebraciones y reuniones.</span>
+            <span data-lang="en" style="display:none">Mesón del Conde is an Empordà cuisine restaurant established in 1965, located in a building constructed in 1878 in the main square of Sant Martí d'Empúries. Its period architecture has been combined with a modernised interior, ideal for celebrations and gatherings.</span>
+            <span data-lang="fr" style="display:none">Le Mesón del Conde est un restaurant de cuisine de l'Empordà établi en 1965, situé dans un bâtiment construit en 1878 sur la Plaça Major de Sant Martí d'Empúries. Son architecture d'époque a été combinée avec un intérieur modernisé, idéal pour les célébrations et les réunions.</span>
+            <span data-lang="de" style="display:none">Das Mesón del Conde ist ein Restaurant der Empordà-Küche, das 1965 gegründet wurde und sich in einem 1878 erbauten Gebäude auf dem Hauptplatz von Sant Martí d'Empúries befindet. Die historische Architektur wurde mit einem modernen Interieur kombiniert, ideal für Feiern und Veranstaltungen.</span>
+            <span data-lang="nl" style="display:none">Het Mesón del Conde is een restaurant met Empordà-keuken, opgericht in 1965 en gevestigd in een gebouw uit 1878 op de Plaça Major van Sant Martí d'Empúries. De historische architectuur is gecombineerd met een modern interieur, ideaal voor vieringen en bijeenkomsten.</span>
+          </p>
+          <p>
+            <span data-lang="ca">Cuinem amb productes frescos de proximitat, molts d'ells del nostre propi hort, seguint les receptes tradicionals de la cuina casolana catalana. El nostre compromís és oferir la millor qualitat tant en els plats com en el servei.</span>
+            <span data-lang="es" style="display:none">Cocinamos con productos frescos de proximidad, muchos de ellos de nuestro propio huerto, siguiendo las recetas tradicionales de la cocina casera catalana. Nuestro compromiso es ofrecer la mejor calidad tanto en los platos como en el servicio.</span>
+            <span data-lang="en" style="display:none">We cook with fresh, locally-sourced ingredients, many from our own vegetable garden, following traditional Catalan home cooking recipes. Our commitment is to offer the best quality in both our dishes and our service.</span>
+            <span data-lang="fr" style="display:none">Nous cuisinons avec des produits frais et locaux, dont beaucoup proviennent de notre propre potager, en suivant les recettes traditionnelles de la cuisine catalane maison. Notre engagement est d'offrir la meilleure qualité dans nos plats comme dans notre service.</span>
+            <span data-lang="de" style="display:none">Wir kochen mit frischen, lokalen Zutaten, viele davon aus unserem eigenen Gemüsegarten, nach traditionellen katalanischen Hausrezepten. Unser Anspruch ist es, höchste Qualität sowohl in unseren Gerichten als auch im Service zu bieten.</span>
+            <span data-lang="nl" style="display:none">We koken met verse, lokale producten, waarvan vele uit onze eigen moestuin, volgens traditionele Catalaanse thuisrecepten. Onze inzet is de beste kwaliteit te bieden, zowel in onze gerechten als in onze service.</span>
+          </p>
+          <div class="about-pills">
+            <span class="pill">
+              <span data-lang="ca">Cuina casolana</span>
+              <span data-lang="es" style="display:none">Cocina casera</span>
+              <span data-lang="en" style="display:none">Home cooking</span>
+              <span data-lang="fr" style="display:none">Cuisine maison</span>
+              <span data-lang="de" style="display:none">Hausmannskost</span>
+              <span data-lang="nl" style="display:none">Huiskeuken</span>
+            </span>
+            <span class="pill">
+              <span data-lang="ca">Hort propi</span>
+              <span data-lang="es" style="display:none">Huerto propio</span>
+              <span data-lang="en" style="display:none">Own garden</span>
+              <span data-lang="fr" style="display:none">Potager propre</span>
+              <span data-lang="de" style="display:none">Eigener Garten</span>
+              <span data-lang="nl" style="display:none">Eigen tuin</span>
+            </span>
+            <span class="pill">
+              <span data-lang="ca">Producte local</span>
+              <span data-lang="es" style="display:none">Producto local</span>
+              <span data-lang="en" style="display:none">Local produce</span>
+              <span data-lang="fr" style="display:none">Produit local</span>
+              <span data-lang="de" style="display:none">Lokale Produkte</span>
+              <span data-lang="nl" style="display:none">Lokale producten</span>
+            </span>
+            <span class="pill">
+              <span data-lang="ca">Celebracions</span>
+              <span data-lang="es" style="display:none">Celebraciones</span>
+              <span data-lang="en" style="display:none">Celebrations</span>
+              <span data-lang="fr" style="display:none">Célébrations</span>
+              <span data-lang="de" style="display:none">Feiern</span>
+              <span data-lang="nl" style="display:none">Vieringen</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MENU ═══ -->
+  <section id="menu">
+    <div class="container">
+      <div class="menu-header reveal">
+        <p class="section-label">
+          <span data-lang="ca">El que oferim</span>
+          <span data-lang="es" style="display:none">Lo que ofrecemos</span>
+          <span data-lang="en" style="display:none">What we offer</span>
+          <span data-lang="fr" style="display:none">Ce que nous offrons</span>
+          <span data-lang="de" style="display:none">Unser Angebot</span>
+          <span data-lang="nl" style="display:none">Wat wij bieden</span>
+        </p>
+        <h2 class="section-title">
+          <span data-lang="ca">Carta de vins &amp; menús</span>
+          <span data-lang="es" style="display:none">Carta de vinos &amp; menús</span>
+          <span data-lang="en" style="display:none">Wine list &amp; menus</span>
+          <span data-lang="fr" style="display:none">Carte des vins &amp; menus</span>
+          <span data-lang="de" style="display:none">Weinkarte &amp; Menüs</span>
+          <span data-lang="nl" style="display:none">Wijnkaart &amp; menu's</span>
+        </h2>
+      </div>
+
+      <!-- Tabs -->
+      <div class="menu-tabs reveal">
+        <button class="tab-btn active" data-tab="blanc">
+          <span data-lang="ca">Vi Blanc</span>
+          <span data-lang="es" style="display:none">Vino Blanco</span>
+          <span data-lang="en" style="display:none">White Wine</span>
+          <span data-lang="fr" style="display:none">Vin Blanc</span>
+          <span data-lang="de" style="display:none">Weißwein</span>
+          <span data-lang="nl" style="display:none">Witte Wijn</span>
+        </button>
+        <button class="tab-btn" data-tab="rosat">
+          <span data-lang="ca">Vi Rosat</span>
+          <span data-lang="es" style="display:none">Vino Rosado</span>
+          <span data-lang="en" style="display:none">Rosé Wine</span>
+          <span data-lang="fr" style="display:none">Vin Rosé</span>
+          <span data-lang="de" style="display:none">Roséwein</span>
+          <span data-lang="nl" style="display:none">Roséwijn</span>
+        </button>
+        <button class="tab-btn" data-tab="negre">
+          <span data-lang="ca">Vi Negre</span>
+          <span data-lang="es" style="display:none">Vino Tinto</span>
+          <span data-lang="en" style="display:none">Red Wine</span>
+          <span data-lang="fr" style="display:none">Vin Rouge</span>
+          <span data-lang="de" style="display:none">Rotwein</span>
+          <span data-lang="nl" style="display:none">Rode Wijn</span>
+        </button>
+        <button class="tab-btn" data-tab="cava">
+          <span data-lang="ca">Cava &amp; Xampany</span>
+          <span data-lang="es" style="display:none">Cava &amp; Champán</span>
+          <span data-lang="en" style="display:none">Sparkling &amp; Champagne</span>
+          <span data-lang="fr" style="display:none">Cava &amp; Champagne</span>
+          <span data-lang="de" style="display:none">Cava &amp; Champagner</span>
+          <span data-lang="nl" style="display:none">Cava &amp; Champagne</span>
+        </button>
+        <button class="tab-btn" data-tab="grup">
+          <span data-lang="ca">Menú de grup</span>
+          <span data-lang="es" style="display:none">Menú de grupo</span>
+          <span data-lang="en" style="display:none">Group menu</span>
+          <span data-lang="fr" style="display:none">Menu de groupe</span>
+          <span data-lang="de" style="display:none">Gruppenmenü</span>
+          <span data-lang="nl" style="display:none">Groepsmenu</span>
+        </button>
+      </div>
+
+      <!-- White Wine Panel -->
+      <div class="menu-panel active" id="panel-blanc">
+        <div class="menu-panel-grid">
+          <div class="menu-card reveal">
+            <div class="menu-card-cat">
+              <span data-lang="ca">Vi de la casa</span>
+              <span data-lang="es" style="display:none">Vino de la casa</span>
+              <span data-lang="en" style="display:none">House wine</span>
+              <span data-lang="fr" style="display:none">Vin maison</span>
+              <span data-lang="de" style="display:none">Hauswein</span>
+              <span data-lang="nl" style="display:none">Huiswijn</span>
+            </div>
+            <div class="menu-item"><span class="menu-item-name">Bach Viña Extrísima Sec</span><span class="menu-item-price">14,90 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Bach Viña Extrísima Sec 37.5cl</span><span class="menu-item-price">9,90 €</span></div>
+          </div>
+          <div class="menu-card reveal" style="transition-delay:.05s">
+            <div class="menu-card-cat">
+              <span data-lang="ca">Blancs seleccionats</span>
+              <span data-lang="es" style="display:none">Blancos seleccionados</span>
+              <span data-lang="en" style="display:none">Selected whites</span>
+              <span data-lang="fr" style="display:none">Blancs sélectionnés</span>
+              <span data-lang="de" style="display:none">Ausgewählte Weißweine</span>
+              <span data-lang="nl" style="display:none">Geselecteerde witte wijnen</span>
+            </div>
+            <div class="menu-item"><span class="menu-item-name">Castell de Raimat</span><span class="menu-item-price">16,50 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Legaris Verdejo</span><span class="menu-item-price">16,80 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">La Charla</span><span class="menu-item-price">16,80 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Leiras</span><span class="menu-item-price">18,00 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Yellow Tail Moscato</span><span class="menu-item-price">16,90 €</span></div>
+          </div>
+          <div class="menu-card reveal" style="transition-delay:.1s">
+            <div class="menu-card-cat">
+              <span data-lang="ca">Selecció premium</span>
+              <span data-lang="es" style="display:none">Selección premium</span>
+              <span data-lang="en" style="display:none">Premium selection</span>
+              <span data-lang="fr" style="display:none">Sélection premium</span>
+              <span data-lang="de" style="display:none">Premium-Auswahl</span>
+              <span data-lang="nl" style="display:none">Premium selectie</span>
+            </div>
+            <div class="menu-item"><span class="menu-item-name">Flor d'Albera</span><span class="menu-item-price">19,00 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Mar Endins</span><span class="menu-item-price">16,90 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Gramona Gessamí</span><span class="menu-item-price">19,90 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Finca Montico</span><span class="menu-item-price">21,70 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Caminante</span><span class="menu-item-price">29,70 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Mar de Frades</span><span class="menu-item-price">25,00 €</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rosé Panel -->
+      <div class="menu-panel" id="panel-rosat">
+        <div class="menu-panel-grid">
+          <div class="menu-card reveal">
+            <div class="menu-card-cat">
+              <span data-lang="ca">Vi de la casa</span>
+              <span data-lang="es" style="display:none">Vino de la casa</span>
+              <span data-lang="en" style="display:none">House wine</span>
+              <span data-lang="fr" style="display:none">Vin maison</span>
+              <span data-lang="de" style="display:none">Hauswein</span>
+              <span data-lang="nl" style="display:none">Huiswijn</span>
+            </div>
+            <div class="menu-item"><span class="menu-item-name">Bach Viña Extrísima</span><span class="menu-item-price">14,90 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Bach Viña Extrísima 50cl</span><span class="menu-item-price">9,90 €</span></div>
+          </div>
+          <div class="menu-card reveal" style="transition-delay:.05s">
+            <div class="menu-card-cat">
+              <span data-lang="ca">Rosats seleccionats</span>
+              <span data-lang="es" style="display:none">Rosados seleccionados</span>
+              <span data-lang="en" style="display:none">Selected rosés</span>
+              <span data-lang="fr" style="display:none">Rosés sélectionnés</span>
+              <span data-lang="de" style="display:none">Ausgewählte Roséweine</span>
+              <span data-lang="nl" style="display:none">Geselecteerde rosés</span>
+            </div>
+            <div class="menu-item"><span class="menu-item-name">Viña Pomal</span><span class="menu-item-price">16,80 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Coll de Roses</span><span class="menu-item-price">16,90 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Trapella</span><span class="menu-item-price">16,90 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Gramona Mustillant</span><span class="menu-item-price">16,60 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Lafage Miraflors</span><span class="menu-item-price">18,70 €</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Red Wine Panel -->
+      <div class="menu-panel" id="panel-negre">
+        <div class="menu-panel-grid">
+          <div class="menu-card reveal">
+            <div class="menu-card-cat">
+              <span data-lang="ca">Vi de la casa</span>
+              <span data-lang="es" style="display:none">Vino de la casa</span>
+              <span data-lang="en" style="display:none">House wine</span>
+              <span data-lang="fr" style="display:none">Vin maison</span>
+              <span data-lang="de" style="display:none">Hauswein</span>
+              <span data-lang="nl" style="display:none">Huiswijn</span>
+            </div>
+            <div class="menu-item"><span class="menu-item-name">Bach Viña Extrísima</span><span class="menu-item-price">14,90 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Bach Viña Extrísima 37.5cl</span><span class="menu-item-price">9,90 €</span></div>
+          </div>
+          <div class="menu-card reveal" style="transition-delay:.05s">
+            <div class="menu-card-cat">
+              <span data-lang="ca">Negres seleccionats</span>
+              <span data-lang="es" style="display:none">Tintos seleccionados</span>
+              <span data-lang="en" style="display:none">Selected reds</span>
+              <span data-lang="fr" style="display:none">Rouges sélectionnés</span>
+              <span data-lang="de" style="display:none">Ausgewählte Rotweine</span>
+              <span data-lang="nl" style="display:none">Geselecteerde rode wijnen</span>
+            </div>
+            <div class="menu-item"><span class="menu-item-name">Raimat Abadia</span><span class="menu-item-price">16,20 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Viña Pomal Centenario Crianza</span><span class="menu-item-price">16,80 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Legaris Roble</span><span class="menu-item-price">16,90 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Tramuntan Art</span><span class="menu-item-price">16,50 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Finca Olivardots Vermell</span><span class="menu-item-price">21,80 €</span></div>
+          </div>
+          <div class="menu-card reveal" style="transition-delay:.1s">
+            <div class="menu-card-cat">
+              <span data-lang="ca">Reserves &amp; grans reserves</span>
+              <span data-lang="es" style="display:none">Reservas &amp; grandes reservas</span>
+              <span data-lang="en" style="display:none">Reservas &amp; Gran Reservas</span>
+              <span data-lang="fr" style="display:none">Réserves &amp; grandes réserves</span>
+              <span data-lang="de" style="display:none">Reservas &amp; Gran Reservas</span>
+              <span data-lang="nl" style="display:none">Reservas &amp; Gran Reservas</span>
+            </div>
+            <div class="menu-item"><span class="menu-item-name">Scala Dei Prior Criança</span><span class="menu-item-price">30,80 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Remelluri Reserva</span><span class="menu-item-price">28,00 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Viña Ardanza Reserva 2010</span><span class="menu-item-price">35,00 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Emilio Moro</span><span class="menu-item-price">28,50 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Marqués de Riscal Gran Reserva</span><span class="menu-item-price">48,25 €</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sparkling Panel -->
+      <div class="menu-panel" id="panel-cava">
+        <div class="menu-panel-grid">
+          <div class="menu-card reveal">
+            <div class="menu-card-cat">
+              <span data-lang="ca">Cava de la casa</span>
+              <span data-lang="es" style="display:none">Cava de la casa</span>
+              <span data-lang="en" style="display:none">House cava</span>
+              <span data-lang="fr" style="display:none">Cava maison</span>
+              <span data-lang="de" style="display:none">Haus-Cava</span>
+              <span data-lang="nl" style="display:none">Huis-cava</span>
+            </div>
+            <div class="menu-item"><span class="menu-item-name">Codorníu Prima Vides</span><span class="menu-item-price">17,90 €</span></div>
+          </div>
+          <div class="menu-card reveal" style="transition-delay:.05s">
+            <div class="menu-card-cat">
+              <span data-lang="ca">Caves artesans</span>
+              <span data-lang="es" style="display:none">Cavas artesanos</span>
+              <span data-lang="en" style="display:none">Artisan cavas</span>
+              <span data-lang="fr" style="display:none">Cavas artisanaux</span>
+              <span data-lang="de" style="display:none">Handwerks-Cavas</span>
+              <span data-lang="nl" style="display:none">Ambachtelijke cavas</span>
+            </div>
+            <div class="menu-item"><span class="menu-item-name">Raimat El Cim del Turó Brut Nature</span><span class="menu-item-price">23,00 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Anna de Codorníu Blanc de Blancs</span><span class="menu-item-price">22,65 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Ars Collecta Gran Reserva Rosé</span><span class="menu-item-price">25,70 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Agustí Torelló Gran Reserva Brut Nature</span><span class="menu-item-price">24,75 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Gramona Imperial Brut</span><span class="menu-item-price">30,40 €</span></div>
+          </div>
+          <div class="menu-card reveal" style="transition-delay:.1s">
+            <div class="menu-card-cat">Champagne</div>
+            <div class="menu-item"><span class="menu-item-name">Moët &amp; Chandon Imperial Brut</span><span class="menu-item-price">49,00 €</span></div>
+            <div class="menu-item"><span class="menu-item-name">Pierre Mignon Brut Prestige</span><span class="menu-item-price">46,00 €</span></div>
+          </div>
+        </div>
+        <p style="text-align:center;margin-top:24px;font-size:.75rem;color:var(--muted);font-style:italic;">
+          <span data-lang="ca">Tots els preus inclouen el 10% d'IVA</span>
+          <span data-lang="es" style="display:none">Todos los precios incluyen el 10% de IVA</span>
+          <span data-lang="en" style="display:none">All prices include 10% VAT</span>
+          <span data-lang="fr" style="display:none">Tous les prix incluent 10% TVA</span>
+          <span data-lang="de" style="display:none">Alle Preise inkl. 10% MwSt.</span>
+          <span data-lang="nl" style="display:none">Alle prijzen inclusief 10% btw</span>
+        </p>
+      </div>
+
+      <!-- Group Menu Panel -->
+      <div class="menu-panel" id="panel-grup">
+        <div class="group-menu-card reveal">
+          <p class="section-label">
+            <span data-lang="ca">Menú de grup</span>
+            <span data-lang="es" style="display:none">Menú de grupo</span>
+            <span data-lang="en" style="display:none">Group menu</span>
+            <span data-lang="fr" style="display:none">Menu de groupe</span>
+            <span data-lang="de" style="display:none">Gruppenmenü</span>
+            <span data-lang="nl" style="display:none">Groepsmenu</span>
+          </p>
+          <div class="group-menu-price"><sup>€</sup>35</div>
+          <div class="group-menu-sub">
+            <span data-lang="ca">per persona · mínim 2 persones · IVA inclòs</span>
+            <span data-lang="es" style="display:none">por persona · mínimo 2 personas · IVA incluido</span>
+            <span data-lang="en" style="display:none">per person · minimum 2 people · VAT included</span>
+            <span data-lang="fr" style="display:none">par personne · minimum 2 personnes · TVA incluse</span>
+            <span data-lang="de" style="display:none">pro Person · mindestens 2 Personen · inkl. MwSt.</span>
+            <span data-lang="nl" style="display:none">per persoon · minimum 2 personen · btw inbegrepen</span>
+          </div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold);margin-bottom:24px;letter-spacing:.05em;">Menú Sant Martí</div>
+
+          <div class="group-menu-section">
+            <div class="group-menu-section-title">
+              <span data-lang="ca">Pica-Pica</span>
+              <span data-lang="es" style="display:none">Entrantes</span>
+              <span data-lang="en" style="display:none">Starters</span>
+              <span data-lang="fr" style="display:none">Entrées</span>
+              <span data-lang="de" style="display:none">Vorspeisen</span>
+              <span data-lang="nl" style="display:none">Voorgerechten</span>
+            </div>
+            <div class="group-menu-item">Carpaccio de filet de vedella amb foie a l'Armagnac</div>
+            <div class="group-menu-item">Calamars a l'andalusa</div>
+            <div class="group-menu-item">Croquetes de peix i marisc</div>
+            <div class="group-menu-item">Pa torrat amb tomàquet</div>
+          </div>
+          <div class="group-menu-section">
+            <div class="group-menu-section-title">
+              <span data-lang="ca">Plat principal</span>
+              <span data-lang="es" style="display:none">Plato principal</span>
+              <span data-lang="en" style="display:none">Main course</span>
+              <span data-lang="fr" style="display:none">Plat principal</span>
+              <span data-lang="de" style="display:none">Hauptgericht</span>
+              <span data-lang="nl" style="display:none">Hoofdgerecht</span>
+            </div>
+            <div class="group-menu-item">Arròs caldós amb gambes i ceps</div>
+            <div class="group-menu-item">Filet de vedella a la brasa</div>
+          </div>
+          <div class="group-menu-section">
+            <div class="group-menu-section-title">
+              <span data-lang="ca">Postres</span>
+              <span data-lang="es" style="display:none">Postres</span>
+              <span data-lang="en" style="display:none">Dessert</span>
+              <span data-lang="fr" style="display:none">Dessert</span>
+              <span data-lang="de" style="display:none">Dessert</span>
+              <span data-lang="nl" style="display:none">Dessert</span>
+            </div>
+            <div class="group-menu-item">Coulant de xocolata amb gelat de vainilla</div>
+          </div>
+          <div class="group-menu-note">
+            <span data-lang="ca">Aigua i cafè inclosos</span>
+            <span data-lang="es" style="display:none">Agua y café incluidos</span>
+            <span data-lang="en" style="display:none">Water and coffee included</span>
+            <span data-lang="fr" style="display:none">Eau et café inclus</span>
+            <span data-lang="de" style="display:none">Wasser und Kaffee inklusive</span>
+            <span data-lang="nl" style="display:none">Water en koffie inbegrepen</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ EXPERIENCE ═══ -->
+  <section id="experience">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:8px;">
+        <p class="section-label">
+          <span data-lang="ca">Per què elegirnos</span>
+          <span data-lang="es" style="display:none">Por qué elegirnos</span>
+          <span data-lang="en" style="display:none">Why choose us</span>
+          <span data-lang="fr" style="display:none">Pourquoi nous choisir</span>
+          <span data-lang="de" style="display:none">Warum uns wählen</span>
+          <span data-lang="nl" style="display:none">Waarom ons kiezen</span>
+        </p>
+        <h2 class="section-title">
+          <span data-lang="ca">Una experiència única</span>
+          <span data-lang="es" style="display:none">Una experiencia única</span>
+          <span data-lang="en" style="display:none">A unique experience</span>
+          <span data-lang="fr" style="display:none">Une expérience unique</span>
+          <span data-lang="de" style="display:none">Ein einzigartiges Erlebnis</span>
+          <span data-lang="nl" style="display:none">Een unieke ervaring</span>
+        </h2>
+      </div>
+      <div class="experience-grid">
+        <div class="exp-card reveal" style="transition-delay:.0s">
+          <div class="exp-icon">🌿</div>
+          <div class="exp-title">
+            <span data-lang="ca">Hort propi</span>
+            <span data-lang="es" style="display:none">Huerto propio</span>
+            <span data-lang="en" style="display:none">Own garden</span>
+            <span data-lang="fr" style="display:none">Potager maison</span>
+            <span data-lang="de" style="display:none">Eigener Garten</span>
+            <span data-lang="nl" style="display:none">Eigen tuin</span>
+          </div>
+          <div class="exp-desc">
+            <span data-lang="ca">Els nostres plats es fan amb verdures i herbes del nostre hort, collides el mateix dia per garantir la frescor màxima.</span>
+            <span data-lang="es" style="display:none">Nuestros platos se elaboran con verduras y hierbas de nuestro huerto, recogidas el mismo día para garantizar la máxima frescura.</span>
+            <span data-lang="en" style="display:none">Our dishes are made with vegetables and herbs from our own garden, harvested the same day to guarantee maximum freshness.</span>
+            <span data-lang="fr" style="display:none">Nos plats sont préparés avec des légumes et des herbes de notre potager, cueillis le jour même pour garantir une fraîcheur maximale.</span>
+            <span data-lang="de" style="display:none">Unsere Gerichte werden mit Gemüse und Kräutern aus unserem eigenen Garten zubereitet, die am selben Tag geerntet werden.</span>
+            <span data-lang="nl" style="display:none">Onze gerechten worden bereid met groenten en kruiden uit onze eigen tuin, dezelfde dag geoogst voor maximale versheid.</span>
+          </div>
+        </div>
+        <div class="exp-card reveal" style="transition-delay:.1s">
+          <div class="exp-icon">🏛️</div>
+          <div class="exp-title">
+            <span data-lang="ca">Edifici del 1878</span>
+            <span data-lang="es" style="display:none">Edificio de 1878</span>
+            <span data-lang="en" style="display:none">1878 building</span>
+            <span data-lang="fr" style="display:none">Bâtiment de 1878</span>
+            <span data-lang="de" style="display:none">Gebäude von 1878</span>
+            <span data-lang="nl" style="display:none">Gebouw uit 1878</span>
+          </div>
+          <div class="exp-desc">
+            <span data-lang="ca">Dinem en un espai carregat d'història. L'edifici patrimonial de la Plaça Major combina l'arquitectura d'època amb la comoditat actual.</span>
+            <span data-lang="es" style="display:none">Comemos en un espacio cargado de historia. El edificio patrimonial de la Plaça Major combina la arquitectura de época con la comodidad actual.</span>
+            <span data-lang="en" style="display:none">Dine in a space steeped in history. The heritage building on the main square combines period architecture with modern comfort.</span>
+            <span data-lang="fr" style="display:none">Dînez dans un espace chargé d'histoire. Le bâtiment patrimonial de la Plaça Major combine l'architecture d'époque avec le confort moderne.</span>
+            <span data-lang="de" style="display:none">Speisen Sie in einem geschichtsträchtigen Ambiente. Das Denkmalgebäude am Hauptplatz verbindet historische Architektur mit modernem Komfort.</span>
+            <span data-lang="nl" style="display:none">Eet in een ruimte vol geschiedenis. Het erfgoedgebouw op het hoofdplein combineert historische architectuur met modern comfort.</span>
+          </div>
+        </div>
+        <div class="exp-card reveal" style="transition-delay:.2s">
+          <div class="exp-icon">🍷</div>
+          <div class="exp-title">
+            <span data-lang="ca">Carta de vins extensa</span>
+            <span data-lang="es" style="display:none">Carta de vinos extensa</span>
+            <span data-lang="en" style="display:none">Extensive wine list</span>
+            <span data-lang="fr" style="display:none">Carte des vins étendue</span>
+            <span data-lang="de" style="display:none">Umfangreiche Weinkarte</span>
+            <span data-lang="nl" style="display:none">Uitgebreide wijnkaart</span>
+          </div>
+          <div class="exp-desc">
+            <span data-lang="ca">Més de 40 referències de vins blancs, rosats, negres i caves, incloent-hi cellers de l'Empordà i denominacions d'arreu d'Espanya.</span>
+            <span data-lang="es" style="display:none">Más de 40 referencias de vinos blancos, rosados, tintos y cavas, incluyendo bodegas del Empordà y denominaciones de toda España.</span>
+            <span data-lang="en" style="display:none">Over 40 references of white, rosé, red wines and cavas, including wineries from the Empordà and denominations from across Spain.</span>
+            <span data-lang="fr" style="display:none">Plus de 40 références de vins blancs, rosés, rouges et cavas, dont des caves de l'Empordà et des appellations de toute l'Espagne.</span>
+            <span data-lang="de" style="display:none">Über 40 Weißwein-, Rosé-, Rotwein- und Cava-Referenzen, darunter Weingüter aus dem Empordà und Anbaugebiete aus ganz Spanien.</span>
+            <span data-lang="nl" style="display:none">Meer dan 40 referenties van witte, rosé, rode wijnen en cavas, inclusief wijnhuizen uit de Empordà en appellations uit heel Spanje.</span>
+          </div>
+        </div>
+        <div class="exp-card reveal" style="transition-delay:.3s">
+          <div class="exp-icon">🎉</div>
+          <div class="exp-title">
+            <span data-lang="ca">Celebracions i grups</span>
+            <span data-lang="es" style="display:none">Celebraciones y grupos</span>
+            <span data-lang="en" style="display:none">Celebrations &amp; groups</span>
+            <span data-lang="fr" style="display:none">Célébrations &amp; groupes</span>
+            <span data-lang="de" style="display:none">Feiern &amp; Gruppen</span>
+            <span data-lang="nl" style="display:none">Vieringen &amp; groepen</span>
+          </div>
+          <div class="exp-desc">
+            <span data-lang="ca">Oferim menús especials per a grups i celebracions. El nostre equip s'adapta a les vostres necessitats per fer de cada ocasió un moment inoblidable.</span>
+            <span data-lang="es" style="display:none">Ofrecemos menús especiales para grupos y celebraciones. Nuestro equipo se adapta a sus necesidades para hacer de cada ocasión un momento inolvidable.</span>
+            <span data-lang="en" style="display:none">We offer special menus for groups and celebrations. Our team adapts to your needs to make every occasion unforgettable.</span>
+            <span data-lang="fr" style="display:none">Nous proposons des menus spéciaux pour les groupes et les célébrations. Notre équipe s'adapte à vos besoins pour faire de chaque occasion un moment inoubliable.</span>
+            <span data-lang="de" style="display:none">Wir bieten Sondermenüs für Gruppen und Feiern an. Unser Team passt sich Ihren Bedürfnissen an, um jeden Anlass unvergesslich zu machen.</span>
+            <span data-lang="nl" style="display:none">Wij bieden speciale menu's aan voor groepen en vieringen. Ons team past zich aan uw wensen aan om elke gelegenheid onvergetelijk te maken.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TESTIMONIAL ═══ -->
+  <section id="testimonial">
+    <div class="container reveal">
+      <div class="testimonial-mark">&ldquo;</div>
+      <p class="testimonial-quote">
+        <span data-lang="ca">El millor restaurant en una masia empordanesa tradicional</span>
+        <span data-lang="es" style="display:none">El mejor restaurante en una masía ampurdanesa tradicional</span>
+        <span data-lang="en" style="display:none">The best restaurant in a traditional Empordà farmhouse</span>
+        <span data-lang="fr" style="display:none">Le meilleur restaurant dans une ferme traditionnelle de l'Empordà</span>
+        <span data-lang="de" style="display:none">Das beste Restaurant in einem traditionellen Empordà-Landhaus</span>
+        <span data-lang="nl" style="display:none">Het beste restaurant in een traditionele Empordà-boerderij</span>
+      </p>
+      <p class="testimonial-source">Programa 2×12 · TV3 · 2018</p>
+    </div>
+  </section>
+
+  <!-- ═══ VISIT ═══ -->
+  <section id="visit">
+    <div class="container">
+      <div class="visit-grid">
+        <div class="reveal-l">
+          <p class="section-label">
+            <span data-lang="ca">Vine a veure'ns</span>
+            <span data-lang="es" style="display:none">Ven a vernos</span>
+            <span data-lang="en" style="display:none">Come visit us</span>
+            <span data-lang="fr" style="display:none">Venez nous voir</span>
+            <span data-lang="de" style="display:none">Besuchen Sie uns</span>
+            <span data-lang="nl" style="display:none">Kom ons bezoeken</span>
+          </p>
+          <h2 class="section-title" style="margin-bottom:48px;">
+            <span data-lang="ca">Troba'ns a la<br>Plaça Major</span>
+            <span data-lang="es" style="display:none">Encuéntranos en<br>la Plaça Major</span>
+            <span data-lang="en" style="display:none">Find us at<br>the main square</span>
+            <span data-lang="fr" style="display:none">Trouvez-nous à<br>la Plaça Major</span>
+            <span data-lang="de" style="display:none">Finden Sie uns am<br>Hauptplatz</span>
+            <span data-lang="nl" style="display:none">Vind ons op<br>de Plaça Major</span>
+          </h2>
+
+          <div class="contact-block">
+            <div class="contact-block-title">
+              <span data-lang="ca">Adreça</span>
+              <span data-lang="es" style="display:none">Dirección</span>
+              <span data-lang="en" style="display:none">Address</span>
+              <span data-lang="fr" style="display:none">Adresse</span>
+              <span data-lang="de" style="display:none">Adresse</span>
+              <span data-lang="nl" style="display:none">Adres</span>
+            </div>
+            <div class="contact-block-value">
+              Plaça Major, 4<br>
+              17130 Sant Martí d'Empúries<br>
+              L'Escala · Girona
+            </div>
+          </div>
+
+          <div class="contact-block">
+            <div class="contact-block-title">
+              <span data-lang="ca">Telèfon</span>
+              <span data-lang="es" style="display:none">Teléfono</span>
+              <span data-lang="en" style="display:none">Phone</span>
+              <span data-lang="fr" style="display:none">Téléphone</span>
+              <span data-lang="de" style="display:none">Telefon</span>
+              <span data-lang="nl" style="display:none">Telefoon</span>
+            </div>
+            <div class="contact-block-value">
+              <a href="tel:+34972770306">972 77 03 06</a><br>
+              <a href="tel:+34972773235">972 77 32 35</a>
+            </div>
+          </div>
+
+          <div class="contact-block">
+            <div class="contact-block-title">
+              <span data-lang="ca">Horari</span>
+              <span data-lang="es" style="display:none">Horario</span>
+              <span data-lang="en" style="display:none">Opening hours</span>
+              <span data-lang="fr" style="display:none">Horaires</span>
+              <span data-lang="de" style="display:none">Öffnungszeiten</span>
+              <span data-lang="nl" style="display:none">Openingstijden</span>
+            </div>
+            <div class="contact-block-value">
+              <div class="hours-grid">
+                <span class="hours-day">
+                  <span data-lang="ca">Dilluns – Diumenge</span>
+                  <span data-lang="es" style="display:none">Lunes – Domingo</span>
+                  <span data-lang="en" style="display:none">Mon – Sun</span>
+                  <span data-lang="fr" style="display:none">Lun – Dim</span>
+                  <span data-lang="de" style="display:none">Mo – So</span>
+                  <span data-lang="nl" style="display:none">Ma – Zo</span>
+                </span>
+                <span class="hours-time">10:00 – 17:00</span>
+              </div>
+              <p style="font-size:.78rem;color:var(--muted);margin-top:8px;font-style:italic;">
+                <span data-lang="ca">Obert tot l'any</span>
+                <span data-lang="es" style="display:none">Abierto todo el año</span>
+                <span data-lang="en" style="display:none">Open year-round</span>
+                <span data-lang="fr" style="display:none">Ouvert toute l'année</span>
+                <span data-lang="de" style="display:none">Ganzjährig geöffnet</span>
+                <span data-lang="nl" style="display:none">Het hele jaar open</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="social-row">
+            <a href="https://www.facebook.com/restaurantmesondelconde/" target="_blank" class="social-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              Facebook
+            </a>
+            <a href="https://www.instagram.com/mesondelconde/" target="_blank" class="social-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              Instagram
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal-r">
+          <div class="map-frame">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2973.5!2d3.1353!3d42.0947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12bae2a0b0b0b0b0%3A0x0!2sPlа%C3%A7a+Major%2C+4%2C+17130+Sant+Mart%C3%AD+d%27Emp%C3%BAries!5e0!3m2!1sca!2ses!4v1"
+              allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Mesón del Conde map">
+            </iframe>
+          </div>
+          <p style="text-align:center;margin-top:16px;">
+            <a href="https://maps.google.com/?q=Meson+del+Conde+Sant+Marti+Empuries" target="_blank" style="font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-decoration:underline;text-underline-offset:3px;">
+              <span data-lang="ca">Obrir a Google Maps →</span>
+              <span data-lang="es" style="display:none">Abrir en Google Maps →</span>
+              <span data-lang="en" style="display:none">Open in Google Maps →</span>
+              <span data-lang="fr" style="display:none">Ouvrir dans Google Maps →</span>
+              <span data-lang="de" style="display:none">In Google Maps öffnen →</span>
+              <span data-lang="nl" style="display:none">Openen in Google Maps →</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ RESERVATION CTA ═══ -->
+  <section id="reservation">
+    <div class="container reveal" style="position:relative;z-index:1;">
+      <p class="section-label">
+        <span data-lang="ca">Reserva ara</span>
+        <span data-lang="es" style="display:none">Reserva ahora</span>
+        <span data-lang="en" style="display:none">Book now</span>
+        <span data-lang="fr" style="display:none">Réservez maintenant</span>
+        <span data-lang="de" style="display:none">Jetzt reservieren</span>
+        <span data-lang="nl" style="display:none">Reserveer nu</span>
+      </p>
+      <h2 class="reservation-title">
+        <span data-lang="ca">Assegureu el vostre taula</span>
+        <span data-lang="es" style="display:none">Asegura tu mesa</span>
+        <span data-lang="en" style="display:none">Secure your table</span>
+        <span data-lang="fr" style="display:none">Réservez votre table</span>
+        <span data-lang="de" style="display:none">Sichern Sie Ihren Tisch</span>
+        <span data-lang="nl" style="display:none">Reserveer uw tafel</span>
+      </h2>
+      <p class="reservation-sub">
+        <span data-lang="ca">Feu la vostra reserva en línia o truqueu-nos directament. Oberts tots els dies de 10:00 a 17:00.</span>
+        <span data-lang="es" style="display:none">Haz tu reserva en línea o llámanos directamente. Abiertos todos los días de 10:00 a 17:00.</span>
+        <span data-lang="en" style="display:none">Make your reservation online or call us directly. Open every day from 10:00 to 17:00.</span>
+        <span data-lang="fr" style="display:none">Faites votre réservation en ligne ou appelez-nous directement. Ouvert tous les jours de 10h00 à 17h00.</span>
+        <span data-lang="de" style="display:none">Reservieren Sie online oder rufen Sie uns direkt an. Täglich von 10:00 bis 17:00 Uhr geöffnet.</span>
+        <span data-lang="nl" style="display:none">Maak uw reservering online of bel ons rechtstreeks. Elke dag geopend van 10:00 tot 17:00.</span>
+      </p>
+      <a href="https://mesondelconde.myrestoo.net" target="_blank" class="btn-primary" style="display:inline-flex;">
+        <span data-lang="ca">Reservar taula en línia</span>
+        <span data-lang="es" style="display:none">Reservar mesa online</span>
+        <span data-lang="en" style="display:none">Book a table online</span>
+        <span data-lang="fr" style="display:none">Réserver une table en ligne</span>
+        <span data-lang="de" style="display:none">Tisch online reservieren</span>
+        <span data-lang="nl" style="display:none">Online een tafel reserveren</span>
+      </a>
+      <div class="reservation-phones">
+        <a href="tel:+34972770306" class="phone-link">
+          <span class="phone-icon">📞</span> 972 77 03 06
+        </a>
+        <a href="tel:+34972773235" class="phone-link">
+          <span class="phone-icon">📞</span> 972 77 32 35
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-logo">Mesón del Conde</div>
+    <div class="footer-tagline">
+      <span data-lang="ca">Cuina empordanesa · Des de 1965</span>
+      <span data-lang="es" style="display:none">Cocina ampurdanesa · Desde 1965</span>
+      <span data-lang="en" style="display:none">Empordà cuisine · Since 1965</span>
+      <span data-lang="fr" style="display:none">Cuisine de l'Empordà · Depuis 1965</span>
+      <span data-lang="de" style="display:none">Empordà-Küche · Seit 1965</span>
+      <span data-lang="nl" style="display:none">Empordà keuken · Sinds 1965</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#about">
+        <span data-lang="ca">Nosaltres</span>
+        <span data-lang="es" style="display:none">Nosotros</span>
+        <span data-lang="en" style="display:none">About</span>
+        <span data-lang="fr" style="display:none">À propos</span>
+        <span data-lang="de" style="display:none">Über uns</span>
+        <span data-lang="nl" style="display:none">Over ons</span>
+      </a></li>
+      <li><a href="#menu">
+        <span data-lang="ca">Carta</span>
+        <span data-lang="es" style="display:none">Carta</span>
+        <span data-lang="en" style="display:none">Menu</span>
+        <span data-lang="fr" style="display:none">Menu</span>
+        <span data-lang="de" style="display:none">Karte</span>
+        <span data-lang="nl" style="display:none">Menu</span>
+      </a></li>
+      <li><a href="#visit">
+        <span data-lang="ca">Contacte</span>
+        <span data-lang="es" style="display:none">Contacto</span>
+        <span data-lang="en" style="display:none">Contact</span>
+        <span data-lang="fr" style="display:none">Contact</span>
+        <span data-lang="de" style="display:none">Kontakt</span>
+        <span data-lang="nl" style="display:none">Contact</span>
+      </a></li>
+      <li><a href="https://www.facebook.com/restaurantmesondelconde/" target="_blank">Facebook</a></li>
+      <li><a href="https://www.instagram.com/mesondelconde/" target="_blank">Instagram</a></li>
+    </ul>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">© 2025 Mesón del Conde · Plaça Major, 4 · Sant Martí d'Empúries · Girona</p>
+  </footer>
+
+  <script>
+    /* ── Language switcher ── */
+    const LANG_KEY = 'mdc-lang';
+    let currentLang = localStorage.getItem(LANG_KEY) || 'ca';
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem(LANG_KEY, lang);
+      document.documentElement.lang = lang;
+      // Show/hide all [data-lang] elements
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+      });
+      // Update active button
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.setLang === lang);
+      });
+    }
+
+    document.querySelectorAll('[data-set-lang]').forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.dataset.setLang));
+    });
+
+    // Init language
+    setLang(currentLang);
+
+    /* ── Hamburger / Mobile menu ── */
+    const hamburger   = document.getElementById('hamburger');
+    const mobileMenu  = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      const open = hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    /* ── Nav scroll effect ── */
+    const nav = document.getElementById('nav');
+    const onScroll = () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* ── Scroll reveal ── */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    /* ── Menu tabs ── */
+    const tabBtns   = document.querySelectorAll('.tab-btn');
+    const panels    = document.querySelectorAll('.menu-panel');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        panels.forEach(p => {
+          p.classList.remove('active');
+          if (p.id === `panel-${target}`) p.classList.add('active');
+        });
+        // Re-trigger reveal for newly visible cards
+        document.querySelectorAll('#panel-' + target + ' .reveal').forEach(el => {
+          el.classList.remove('visible');
+          setTimeout(() => revealObserver.observe(el), 10);
+        });
+      });
+    });
+
+    /* ── Counter animation ── */
+    function animateCounter(el, target, duration = 1800) {
+      const start = performance.now();
+      const update = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(update);
+        else el.textContent = target;
+      };
+      requestAnimationFrame(update);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const el = e.target;
+          const val = parseInt(el.textContent.replace(/\D/g, ''));
+          animateCounter(el, val);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-num').forEach(el => counterObserver.observe(el));
+  </script>
+</body>
+</html>
